@@ -37,6 +37,17 @@ echo "" >> ""${LOG_NAME}""
 echo "$(lsblk -nl)" >> ""${LOG_NAME}""
 echo "" >> ""${LOG_NAME}""
 
+echo "################### ALMACENAMIENTO  #################" >> ""${LOG_NAME}""
+echo -e "${blue}## FILE SYSTEMS  ## ${nc}\n" >> ""${LOG_NAME}""
+df -hP|sort -nk5  | sed "s/\(.*\)/\t\1/g" >> ""${LOG_NAME}""
+echo "" >> ""${LOG_NAME}""
+echo -e "\n${blue}## PUNTOS DE MONTAJE ###${nc}\n" >> ""${LOG_NAME}""
+cat /proc/mounts|sort  | sed "s/\(.*\)/\t\1/g" >> ""${LOG_NAME}""
+
+echo -e "\n${blue}## FSTAB ##${nc}\n" >> ""${LOG_NAME}""
+cat /etc/fstab|grep -v -e ^$ -e ^# | sed "s/\(.*\)/\t\1/g" >> ""${LOG_NAME}""
+echo "" >> ""${LOG_NAME}""
+
 echo "##############  SISTEMA OPERATIVO  ################" >> ""${LOG_NAME}""
 echo "" >> ""${LOG_NAME}""
 
