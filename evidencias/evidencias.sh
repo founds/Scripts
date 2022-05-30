@@ -1,7 +1,7 @@
 #/bin/bash
 
 # Generador de evidencias de maquina
-# Version: 1.1
+# Version: 1.2
 
 # Variables
 HOST=$(hostname)
@@ -38,13 +38,15 @@ echo "$(lsblk -nl)" >> ""${LOG_NAME}""
 echo "" >> ""${LOG_NAME}""
 
 echo "################### ALMACENAMIENTO  #################" >> ""${LOG_NAME}""
-echo -e "${blue}## FILE SYSTEMS  ## ${nc}\n" >> ""${LOG_NAME}""
+echo "" >> ""${LOG_NAME}""
+echo "## FILE SYSTEMS  ##" >> ""${LOG_NAME}""
 df -hP|sort -nk5  | sed "s/\(.*\)/\t\1/g" >> ""${LOG_NAME}""
 echo "" >> ""${LOG_NAME}""
-echo -e "\n${blue}## PUNTOS DE MONTAJE ###${nc}\n" >> ""${LOG_NAME}""
+echo "## PUNTOS DE MONTAJE ###" >> ""${LOG_NAME}""
 cat /proc/mounts|sort  | sed "s/\(.*\)/\t\1/g" >> ""${LOG_NAME}""
 
-echo -e "\n${blue}## FSTAB ##${nc}\n" >> ""${LOG_NAME}""
+echo "## FSTAB ##" >> ""${LOG_NAME}""
+echo "" >> ""${LOG_NAME}""
 cat /etc/fstab|grep -v -e ^$ -e ^# | sed "s/\(.*\)/\t\1/g" >> ""${LOG_NAME}""
 echo "" >> ""${LOG_NAME}""
 
@@ -58,6 +60,15 @@ echo "Version: $(grep DISTRIB_RELEASE /etc/*-release | cut -d '=' -f2)" >> "${LO
 echo "Nombre: $(grep DISTRIB_CODENAME /etc/*-release | cut -d '=' -f2)" >> "${LOG_NAME}" 
 echo "UPTIME: `date +"%T"` " >> "${LOG_NAME}"
 echo "" >> ""${LOG_NAME}""
+
+echo "###################### RED ######################" >> "${LOG_NAME}"
+echo "" >> "${LOG_NAME}"
+echo "$(ip a)" >> "${LOG_NAME}"
+echo "" >> "${LOG_NAME}"
+echo "###################### HOSTS ######################" >> "${LOG_NAME}"
+echo "" >> "${LOG_NAME}"
+echo "$(cat /etc/hosts)" >> "${LOG_NAME}"
+echo "" >> "${LOG_NAME}"
 
 # Accesos fallidos SSH
 echo "################ ACCESOS FALLIDOS SSH ####################" >> "${LOG_NAME}"
