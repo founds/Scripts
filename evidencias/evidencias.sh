@@ -70,6 +70,11 @@ echo "" >> "${LOG_NAME}"
 echo "$(cat /etc/hosts)" >> "${LOG_NAME}"
 echo "" >> "${LOG_NAME}"
 
+echo "###################### USUARIOS ######################" >> "${LOG_NAME}"
+echo "" >> "${LOG_NAME}"
+echo "$(awk -F: '$3 >= 1000 {print $1}' /etc/passwd)" >> "${LOG_NAME}"
+echo "" >> "${LOG_NAME}"
+
 # Accesos fallidos SSH
 echo "################ ACCESOS FALLIDOS SSH ####################" >> "${LOG_NAME}"
 grep "Failed password" /var/log/auth.log >> "${LOG_NAME}"
