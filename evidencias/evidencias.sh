@@ -46,6 +46,7 @@ echo "Linux Distro: `cat /etc/*-release | head -1|cut -d '=' -f2`" >> "${LOG_NAM
 echo "Version: $(grep DISTRIB_RELEASE /etc/*-release | cut -d '=' -f2)" >> "${LOG_NAME}"
 echo "Nombre: $(grep DISTRIB_CODENAME /etc/*-release | cut -d '=' -f2)" >> "${LOG_NAME}" 
 echo "UPTIME: `date +"%T"` " >> "${LOG_NAME}"
+echo "" >> ""${LOG_NAME}""
 
 # Accesos fallidos SSH
 echo "################ ACCESOS FALLIDOS SSH ####################" >> "${LOG_NAME}"
