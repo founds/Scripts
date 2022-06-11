@@ -10,6 +10,9 @@ LOG_NAME="evidencias-${HOST}-${FECHA}.txt"
 
 clear
 
+# Comprobar si hay actualizaciones del script
+git pull
+
 echo "" > ""${LOG_NAME}""
 echo "######################## INFO #######################" >> ""${LOG_NAME}""
 
@@ -91,6 +94,15 @@ if which docker ps -a  > /dev/null; then
   echo "################ IMAGENES DOCKER ####################" >> "${LOG_NAME}"
   echo "" >> "${LOG_NAME}"
   docker ps -a >> "${LOG_NAME}"
+  echo "" >> "${LOG_NAME}"
+fi
+echo "" >> "${LOG_NAME}"
+
+# Comprobar si existe apache2
+if which apache2ctl > /dev/null; then
+  echo "################ PAGINAS EN APACHE ####################" >> "${LOG_NAME}"
+  echo "" >> "${LOG_NAME}"
+  apache2ctl -S | grep namevhost | awk -F ' ' '{ print $4 }' >> "${LOG_NAME}"
   echo "" >> "${LOG_NAME}"
 fi
 echo "" >> "${LOG_NAME}"
