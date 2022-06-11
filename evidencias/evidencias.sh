@@ -86,5 +86,14 @@ if which vagrant global-status  > /dev/null; then
 fi
 echo "" >> "${LOG_NAME}"
 
+# Comprobar si existe docker
+if which docker ps -a  > /dev/null; then
+  echo "################ IMAGENES DOCKER ####################" >> "${LOG_NAME}"
+  echo "" >> "${LOG_NAME}"
+  docker ps -a >> "${LOG_NAME}"
+  echo "" >> "${LOG_NAME}"
+fi
+echo "" >> "${LOG_NAME}"
+
 echo "" >> "${LOG_NAME}"
 echo "#################  FIN  ###############################" >> "${LOG_NAME}"
