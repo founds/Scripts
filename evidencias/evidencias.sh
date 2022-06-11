@@ -1,7 +1,7 @@
 #/bin/bash
 
 # Generador de evidencias de maquina
-# Version: 1.2
+# Version: 1.3
 
 # Variables
 HOST=$(hostname)
@@ -44,6 +44,7 @@ df -hP|sort -nk5  | sed "s/\(.*\)/\t\1/g" >> ""${LOG_NAME}""
 echo "" >> ""${LOG_NAME}""
 echo "## PUNTOS DE MONTAJE ###" >> ""${LOG_NAME}""
 cat /proc/mounts|sort  | sed "s/\(.*\)/\t\1/g" >> ""${LOG_NAME}""
+echo "" >> ""${LOG_NAME}""
 
 echo "## FSTAB ##" >> ""${LOG_NAME}""
 echo "" >> ""${LOG_NAME}""
@@ -65,6 +66,7 @@ echo "###################### RED ######################" >> "${LOG_NAME}"
 echo "" >> "${LOG_NAME}"
 echo "$(ip a)" >> "${LOG_NAME}"
 echo "" >> "${LOG_NAME}"
+
 echo "###################### HOSTS ######################" >> "${LOG_NAME}"
 echo "" >> "${LOG_NAME}"
 echo "$(cat /etc/hosts)" >> "${LOG_NAME}"
@@ -75,11 +77,14 @@ echo "" >> "${LOG_NAME}"
 echo "$(awk -F: '$3 >= 1000 {print $1}' /etc/passwd)" >> "${LOG_NAME}"
 echo "" >> "${LOG_NAME}"
 
-# Accesos fallidos SSH
-echo "################ ACCESOS FALLIDOS SSH ####################" >> "${LOG_NAME}"
-grep "Failed password" /var/log/auth.log >> "${LOG_NAME}"
-echo "################" >> "${LOG_NAME}"
-journalctl _SYSTEMD_UNIT=ssh.service | grep -E "Failed|Failure" >> "${LOG_NAME}"
+# Comprobar si existe vagrant
+if which vagrant global-status  > /dev/null; then
+  echo "################ IMAGENES VAGRANT ####################" >> "${LOG_NAME}"
+  echo "" >> "${LOG_NAME}"
+  vagrant global-status >> "${LOG_NAME}"
+  echo "" >> "${LOG_NAME}"
+fi
 echo "" >> "${LOG_NAME}"
 
+echo "" >> "${LOG_NAME}"
 echo "#################  FIN  ###############################" >> "${LOG_NAME}"
