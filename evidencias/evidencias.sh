@@ -80,6 +80,15 @@ echo "" >> "${LOG_NAME}"
 echo "$(awk -F: '$3 >= 1000 {print $1}' /etc/passwd)" >> "${LOG_NAME}"
 echo "" >> "${LOG_NAME}"
 
+# Comprobar si existe ssh
+if which systemctl status sshd > /dev/null; then
+  echo "################ SSH ####################" >> "${LOG_NAME}"
+  echo "" >> "${LOG_NAME}"
+  echo " -> Activo" >> "${LOG_NAME}"
+  echo "" >> "${LOG_NAME}"
+fi
+echo "" >> "${LOG_NAME}"
+
 # Comprobar si existe vagrant
 if which vagrant global-status  > /dev/null; then
   echo "################ IMAGENES VAGRANT ####################" >> "${LOG_NAME}"
